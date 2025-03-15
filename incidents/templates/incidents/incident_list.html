@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Incidentes{% endblock %}
+{% block content %}
+{% include 'incidents/includes/incidents_menu.html' %}
+<main role="main">
+  <div class="container card shadow-sm">
+    {% for incident in incident_list|dictsort:"id" %}
+      <div class="row mt-3">
+        <div class="col-md-9 mx-auto">
+          <h2 class="mb-4 ">{{incident.id_servicio}}</h2>
+          <div>
+            <p>{{incident.nombre_anillo|striptags|safe|truncatechars:"200"}}</p>
+            <p>{{incident.nombre_cliente|striptags|safe|truncatechars:"200"}}</p>
+            <p>{{incident.direccion_servicio|striptags|safe|truncatechars:"200"}}</p>
+            <p>{{incident.ip|striptags|safe|truncatechars:"200"}}</p>
+            <p>{{incident.observaciones|striptags|safe|truncatechars:"200"}}</p>
+            <p>
+              <a href="{% url 'incidents:incident' incident.id incident.id_servicio|slugify  %}" 
+              class="btn btn-info btn-sm">Leer más</a>
+            | <a href="{% url 'incidents:update' incident.id  %}" 
+              class="btn btn-warning btn-sm" >Editar</a>
+            | <a href="{% url 'incidents:delete' incident.id  %}" 
+              class="btn btn-danger btn-sm">Borrar</a>
+              <hr class="bg-dark">
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

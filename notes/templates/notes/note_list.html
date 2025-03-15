@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Notas{% endblock %}
+{% block content %}
+{% include 'notes/includes/notes_menu.html'%}
+<div class="card shadow-sm">
+  <div class="card-body">
+      <h1 class="card-title mb-4">Sistema de Gestión de Notas</h1>
+      <p class="card-text mb-4">Seleccione el tipo de nota que desea crear o gestionar desde el menú de navegación.</p>
+      
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+          <div class="col">
+              <div class="card h-100">
+                  <div class="card-body">
+                      <h5 class="card-title">Notas de Diagnóstico</h5>
+                      <p class="card-text">Gestione notas relacionadas con diagnósticos.</p>
+                      <a href="#" class="btn btn-primary">Acceder</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="col">
+              <div class="card h-100">
+                  <div class="card-body">
+                      <h5 class="card-title">Notas de Llamada</h5>
+                      <p class="card-text">Registre información de llamadas realizadas.</p>
+                      <a href="#" class="btn btn-primary">Acceder</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="col">
+              <div class="card h-100">
+                  <div class="card-body">
+                      <h5 class="card-title">Notas de Correo</h5>
+                      <p class="card-text">Gestione comunicaciones por correo electrónico.</p>
+                      <a href="#" class="btn btn-primary">Acceder</a>
+                  </div>
+              </div>
+          </div>
+        </div>  
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <div class="col">
+              <div class="card h-100">
+                  <div class="card-body">
+                      <h5 class="card-title">Notas de Reprueba</h5>
+                      <p class="card-text">Gestione información de repruebas.</p>
+                      <a href="#" class="btn btn-primary">Acceder</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="col">
+              <div class="card h-100">
+                  <div class="card-body">
+                      <h5 class="card-title">Notas de Resolución</h5>
+                      <p class="card-text">Registre resoluciones y decisiones.</p>
+                      <a href="#" class="btn btn-primary">Acceder</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="col">
+              <div class="card h-100">
+                  <div class="card-body">
+                      <h5 class="card-title">Comunicación con Especialista</h5>
+                      <p class="card-text">Gestione comunicaciones con especialistas.</p>
+                      <a href="#" class="btn btn-primary">Acceder</a>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

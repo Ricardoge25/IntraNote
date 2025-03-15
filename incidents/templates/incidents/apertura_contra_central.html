@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load incidents_extra %} 
+{% block title %}Apertura Simple contra Central{% endblock %}
+{% block content %}
+{% include 'incidents/includes/incidents_menu.html'%}
+
+<div class="container mb-4 mt-3">
+<h2>Diagnóstico de Apertura contra la Central</h2>
+
+    <!--FORMULARIO-->
+    <div class="container mt-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+              {% for field in form %}
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field|add_class:"form-control" }}
+                    </div>
+                </div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>
+        </form>
+    </div>
+
+<!--SALIDA DEL FORMULARIO-->
+{% if texto %}
+    <div class="container mt-1">
+        <h3>Texto Generado</h3>
+        <div class="form-group">
+            <textarea class="form-control" id="resultado" rows="30" readonly>{{ texto }}</textarea>
+        </div>
+    </div>
+
+{% else %}  
+    <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
+{% endif %}
+</div>
+
+{% endblock%}
