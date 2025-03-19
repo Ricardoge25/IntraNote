@@ -14,7 +14,6 @@ class Incident(models.Model):
     observaciones = models.TextField(verbose_name='Observaciones',  blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated = models.DateTimeField(auto_now=True, verbose_name='Fecha de modificación')
-    id_user = models.OneToOneField
 
     class Meta:
         verbose_name = 'incidente'
