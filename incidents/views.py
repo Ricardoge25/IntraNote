@@ -3,35 +3,53 @@ from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from .models import Incident
 from . import forms
 
-class AuthenticatedRequiredMixin():
-    """
+"""class AuthenticatedRequiredMixin():
+    
     Este mixin se utiliza para verificar si el usuario está autenticado
-    """
+    
     def dispatch(self, request, *args, **kwargs):
         return super(AuthenticatedRequiredMixin, self).dispatch(request, *args, **kwargs)
-
+"""
 # Create your views here.
-class ListIncidentView(ListView):
+class ListIncidentView(LoginRequiredMixin, ListView):
     model = Incident
+
+    def get_queryset(self):
+        #Filtramos los incidentes para mostrar solo los del usuario actual
+        return Incident.objects.filter(usuario=self.request.user)
 
 class IncidentDetailView(DetailView):
     model = Incident
 
-class IncidentCreateView(AuthenticatedRequiredMixin, CreateView):
+    def get_queryset(self):
+        # Filtra para permitir acceso solo a los incidentes propios
+        return Incident.objects.filter(usuario=self.request.user)
+
+class IncidentCreateView(LoginRequiredMixin, CreateView):
     model = Incident
     form_class = forms.IncidentForm
     success_url = reverse_lazy('incidents:incidents')
+
+    def form_valid(self, form):
+        # Asigna el usuario actual antes de guardar
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 class IncidentUpdateView(UpdateView):
     model = Incident
     form_class = forms.IncidentForm
     template_name_suffix = "_update_form"
+
+    def get_queryset(self):
+        # Filtra para permitir editar solo los incidentes propios
+        return Incident.objects.filter(usuario=self.request.user)
 
     def get_success_url(self):
         return reverse_lazy('incidents:update', args=[self.object.id]) + '?ok'
@@ -39,6 +57,10 @@ class IncidentUpdateView(UpdateView):
 class IncidentDeleteView(DeleteView):
     model = Incident
     success_url = reverse_lazy("incidents:incidents")
+
+    def get_queryset(self):
+        # Filtra para permitir eliminar solo los incidentes propios
+        return Incident.objects.filter(usuario=self.request.user)
 
 class BaseIncidentView(View):
     template_name = None

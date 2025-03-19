@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Incident(models.Model):
@@ -14,6 +15,7 @@ class Incident(models.Model):
     observaciones = models.TextField(verbose_name='Observaciones',  blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated = models.DateTimeField(auto_now=True, verbose_name='Fecha de modificación')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='incidentes', null=True)
 
     class Meta:
         verbose_name = 'incidente'
