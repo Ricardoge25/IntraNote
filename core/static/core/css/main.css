@@ -44,3 +44,8 @@ footer p {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); 
 }
 
+.btn-minimal:hover {
+    color: #212529;
+    transform: translateX(-3px);
+}
+    

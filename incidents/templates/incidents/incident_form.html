@@ -6,6 +6,18 @@
 {% include 'incidents/includes/incidents_menu.html'%}
 <main role="main">
   <div class="container">
+    <div class="row ">
+      <div class="col-md-11">
+        <h2 class="section-heading mb-4">CREAR INCIDENTE</h2>
+      </div>
+      <div class="col-md-1">
+          <div class="mb-3">
+            <a href="javascript:history.back()" class="btn btn-light border-0 shadow-sm rounded-3  py-2">
+              <i class="fa fa-arrow-left m-2 text-dark"></i>
+            </a>
+          </div>
+      </div>
+    </div>
     <div class="row mt-3 mb-4">
       <div class="col-md-9 mx-auto">
         {% if form.errors %}
