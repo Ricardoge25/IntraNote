@@ -153,7 +153,7 @@ class EquipoCaido(BaseIncidentView):
         ip_sw_vecinoA = form.cleaned_data['ip_sw_vecinoA']
         ip_sw_vecinoB = form.cleaned_data['ip_sw_vecinoB']
         return f"""
-REMARK:
+REMARKS NCE:
 Equipo Caído: 
 {nro_incidente} / Switch Apagado / {incident.nombre_anillo} / {ciudad} / {incident.ip}
 Vecino A: 
@@ -161,7 +161,7 @@ Vecino A:
 Vecino B: 
 {nro_incidente} / Apertura sin afectación / {incident.nombre_anillo} / {ciudad} / {ip_sw_vecinoB}  
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
-    ID prueba: 
+    ID prueba: No aplica
     Conclusión al ejecutar lista de chequeo: No aplica
     Diagnóstico realizado: Servicio activo en Fénix, se evidencia alarma de equipo apagado para el cliente {incident.nombre_cliente} en el anillo {incident.nombre_anillo}. Se ingresa a NCE y se evidencia switch de fibra óptica offline por SecureCRT. Se validan los vecinos presentan apertura por una de las gigas. 
     Falla eléctrica S/N : Sin definir

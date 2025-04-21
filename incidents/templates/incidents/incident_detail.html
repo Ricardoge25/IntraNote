@@ -1,9 +1,11 @@
-{% extends 'core/base.html' %} {% load static %} {% block title
-%}{{incident.id_servicio}}{% endblock %} {% block content %} {% include
-'incidents/includes/incidents_menu.html' %}
+{% extends 'core/base.html' %} 
+{% load static %} 
+{% block title%} {{incident.id_servicio}} {% endblock %} 
+{% block content %} 
+{% include 'incidents/includes/incidents_menu.html' %}
 <main role="main">
   <div class="container">
-    <!-- DATOS DEL INCIDENTE -->
+    <!--TITULO Y BOTÓN REGRESAR-->
     <div class="row my-2">
       <div class="col-md-11">
         <h2 class="section-heading mb-4">{{incident.id_servicio}}</h2>
@@ -18,6 +20,7 @@
           </a>
         </div>
       </div>
+      <!-- DATOS DEL INCIDENTE -->
       <div class="col-md-12 mx-auto">
         <div>
           <table class="table table-bordered table-striped table-hover">
