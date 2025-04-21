@@ -172,7 +172,7 @@ NOTA: El equipo de fibra óptica se evidencia apagado desde {fecha_caida}.
 S3GU1M13NT0_3V3NT0S:d1agnostico
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 """
-       
+    
 class NotaLlamada(BaseIncidentView):
     template_name = 'incidents/llamada_saliente.html'
     form_class = forms.NotaLlamadaForm
