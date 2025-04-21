@@ -22,10 +22,10 @@
       <div class="col-md-9 mx-auto">
           {% if 'ok' in request.GET %}
             <div class="alert alert-success mt-2" role="alert">
-                <strong>Aviso:</strong>  Incidente editado correctamente.
-                <a href="{% url 'incidents:incident' incident.id incident.id_servicio|slugify %}" class="alert-link">
-                  Ver resultado
-                </a>
+              <strong>Aviso:</strong>  Incidente editado correctamente.
+              <a href="{% url 'incidents:incident' incident.id incident.id_servicio|slugify %}" class="alert-link">
+                Ver resultado
+              </a>
             </div>
           {% endif %}
           <form action="" method="post">
@@ -41,10 +41,10 @@
                   </div>
                 {% else %}
                   <div class="col-md-4">
-                      <div class="form-group">
-                          {{ field.label_tag }}
-                          {{ field|add_class:"form-control" }}
-                      </div>
+                    <div class="form-group">
+                      {{ field.label_tag }}
+                      {{ field|add_class:"form-control" }}
+                    </div>
                   </div>
                 {% endif %}
               {% endfor %}
@@ -59,3 +59,4 @@
   </div>
 </main>
 {% endblock %}
+

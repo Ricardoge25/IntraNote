@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import ListNoteView
+from . import views
 
 notes_patterns = ([
-    path('', ListNoteView.as_view(), name='notes'),
+    path('', views.ListNoteView.as_view(), name='notes'),
+    path('nota_diagnostico/',  views.nota_diagnostico.as_view(), name='nota_diagnostico'),
 ])
 
