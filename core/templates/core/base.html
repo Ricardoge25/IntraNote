@@ -16,7 +16,7 @@
   </head>
   <body>
       <!-- Navegación -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
         <div class="container">
           <a class="navbar-brand" href="{% url 'home' %}">XMEN</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ned" aria-controls="ned" aria-expanded="false">
@@ -70,9 +70,8 @@
       <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
       <script src="{% static 'core/js/main.js' %}"></script>
   </body>
-  <footer class="bg-white border-top pt-3 fixed-bottom">
-    <div class="container text-center text-muted pt-3 ">
-
+  <footer class="bg-white border-top fixed-bottom footer-small" style="padding: 15px 0;">
+    <div class="container text-center text-muted ">
       <p>© {% now "Y" %} Comware XMEN 2.0. Todos los derechos reservados.</p>
     </div>  
   </footer>

@@ -9,7 +9,7 @@
   <!--TITULO Y BOTÓN REGRESAR-->
   <div class="row mt-2">
     <div class="col-md-11">
-      <h2>Diagnóstico de Apertura entre Clientes</h2>
+      <h2>DIAGNÓSTICO DE APERTURA ENTRE CLIENTES</h2>
     </div>
     <div class="col-md-1">
       <div class="mb-3">
@@ -25,12 +25,21 @@
       {% csrf_token %}
       <div class="row">
         {% for field in form %}
+          {% if forloop.counter <= 3 %}
+            <div class="col-md-3 mx-auto"> 
+              <div class="form-group">
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control" }}
+              </div>
+            </div>
+          {% else %}
           <div class="col-md-6">
             <div class="form-group">
               {{ field.label_tag }}
               {{ field|add_class:"form-control" }}
             </div>
           </div>
+          {% endif %}
         {% endfor %}
       </div>
       <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>

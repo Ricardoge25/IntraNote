@@ -105,6 +105,7 @@ class AperturaEntreClientes(BaseIncidentView):
         direccion_b = form.cleaned_data['direccion_b']
         contacto_b = form.cleaned_data['contacto_b']
         telefono_b = form.cleaned_data['telefono_b']
+        correo_b = form.cleaned_data['correo_b']
         ip_switch_b = form.cleaned_data['ip_switch_b']
 
         return f"""
@@ -126,6 +127,7 @@ GE CAIDA: {giga_caida_A}
 DIRECCIÓN: {incident.direccion_servicio}
 CONTACTO: {incident.nombre_contacto}
 TELÉFONO: {incident.numero_contacto}
+CORREO: {incident.correo_contacto}
 IP SWITCH: {incident.ip}
 DISPONIBILIDAD: L-V 8:00 - 16:00
 
@@ -135,6 +137,7 @@ GE CAIDA: {giga_caida_B}
 DIRECCIÓN: {direccion_b}
 CONTACTO: {contacto_b}
 TELÉFONO: {telefono_b}
+CORREO: {correo_b}
 IP SWITCH: {ip_switch_b}
 DISPONIBILIDAD: L-V 8:00 - 16:00
 
@@ -147,7 +150,6 @@ class EquipoCaido(BaseIncidentView):
     form_class = forms.EquipoCaidoForm
 
     def generar_texto(self, form, incident):
-        fecha_caida = form.cleaned_data['fecha_caida']
         nro_incidente = form.cleaned_data['nro_incidente']
         ciudad = form.cleaned_data['ciudad']
         ip_sw_vecinoA = form.cleaned_data['ip_sw_vecinoA']
@@ -165,9 +167,6 @@ Vecino B:
     Conclusión al ejecutar lista de chequeo: No aplica
     Diagnóstico realizado: Servicio activo en Fénix, se evidencia alarma de equipo apagado para el cliente {incident.nombre_cliente} en el anillo {incident.nombre_anillo}. Se ingresa a NCE y se evidencia switch de fibra óptica offline por SecureCRT. Se validan los vecinos presentan apertura por una de las gigas. 
     Falla eléctrica S/N : Sin definir
-
-NOTA: El equipo de fibra óptica se evidencia apagado desde {fecha_caida}.
-
 
 S3GU1M13NT0_3V3NT0S:d1agnostico
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -264,3 +263,58 @@ class DiagnosticoPotencias(BaseIncidentView):
 
     S3GU1M13NT0_3V3NT0S:d1agnostico
     """
+
+class TicketApDobleUno(BaseIncidentView):
+    template_name = 'incidents/ticket_ap_doble_1.html'
+    form_class = forms.TicketApDobleUnoForm
+
+    def generar_texto(self, form, incident):
+        ciudad = form.cleaned_data['ciudad']
+        dispoonibilidad = form.cleaned_data['disponibilidad']
+        descartes = form.cleaned_data['descartes']
+
+        resumen = f"""
+Se presenta apertura doble en el anillo {incident.nombre_anillo} ({ciudad}) afectando comunicaciones del cliente
+"""
+        descripcion = f"""
+Se presenta apertura doble en el anillo {incident.nombre_anillo} ({ciudad}) afectando comunicaciones del cliente
+
+ANILLO: {incident.nombre_anillo}
+IP SWITCH: {incident.ip}
+CIUDAD: {ciudad}
+NOMBRE DEL CLIENTE: {incident.nombre_cliente}
+CONTACTO CLIENTE: {incident.nombre_contacto}
+DIRECCIÓN CLIENTE:{incident.direccion_servicio}
+TELÉFONO CLIENTE : {incident.numero_contacto}
+CORREO CLIENTE : {incident.correo_contacto}
+DISPONIBILIAD: {dispoonibilidad}
+DESCARTES REALIZADOS: {descartes}
+
+NOTA: Se debe garantizar que al cerrar el anillo los niveles de potencia queden entre los rangos establecidos
+    """
+        
+        return resumen, descripcion
+    
+    def post(self, request, incident_id, *args, **kwargs):
+        incident = get_object_or_404(Incident, pk=incident_id)
+        form = self.form_class(request.POST, incident=incident)
+
+        # Inicializa los textos como vacíos
+        resumen = None
+        descripcion = None
+
+        if form.is_valid():
+            resumen_text, descripcion_text = self.generar_texto(form, incident)
+            action = request.POST.get('action')  # Identifica qué botón fue presionado
+            if action == 'resumen':
+                resumen = resumen_text
+            elif action == 'descripcion':
+                descripcion = descripcion_text
+
+        # Mantén los textos existentes en el contexto
+        return render(request, self.template_name, {
+            'form': form,
+            'incident': incident,
+            'resumen': resumen or request.POST.get('resumen'),
+            'descripcion': descripcion or request.POST.get('descripcion'),
+        })
