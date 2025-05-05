@@ -6,45 +6,46 @@
 {% include 'incidents/includes/incidents_menu.html'%}
 
 <div class="container mb-4 mt-3">
-    <div class="row mt-2">
-        <div class="col-md-11">
-            <h2>Diagnóstico de Equipo Caído</h2>
-        </div>
-        <div class="col-md-1">
-            <div class="mb-3">
-                <a href="javascript:history.back()" class="btn btn-light border-0 shadow-sm rounded-3 px-4 py-2">
-                <i class="fa fa-arrow-left m-2 text-dark"></i>
-                </a>
-            </div>
-        </div>
+  <!--TITULO Y BOTÓN REGRESAR-->
+  <div class="row mt-2">
+    <div class="col-md-11">
+      <h2>DIAGNÓSTICO DE APERTURA DOBLE</h2>
     </div>
-    <!--FORMULARIO-->
-    <div class="container mt-4">
-        <form method="post" autocomplete="on">
-            {% csrf_token %}
-            <div class="row">
-                {% for field in form %}
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            {{ field.label_tag }}
-                            {{ field|add_class:"form-control" }}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>
-        </form>
+    <div class="col-md-1">
+      <div class="mb-3">
+        <a href="javascript:history.back()" class="btn btn-light border-0 shadow-sm rounded-3 px-4 py-2">
+        <i class="fa fa-arrow-left m-2 text-dark"></i>
+        </a>
+      </div>
     </div>
-
-{% if texto %}
-<div class="container mt-2">
+  </div>
+  <!--FORMULARIO-->
+  <div class="container mt-4">
+    <form method="post" autocomplete="on">
+      {% csrf_token %}
+      <div class="row">
+        {% for field in form %}
+          <div class="col-md-3">
+            <div class="form-group">
+              {{ field.label_tag }}
+              {{ field|add_class:"form-control" }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>
+    </form>
+  </div>
+  
+  {% if texto %}
+  <div class="container mt-2">
     <h3>Texto Generado</h3>
     <div class="form-group">
-        <textarea class="form-control" id="resultado" rows="20" readonly>{{ texto }}</textarea>
+      <textarea class="form-control" id="resultado" rows="20" readonly>{{ texto }}</textarea>
     </div>
-</div>
-{% else %}  
+  </div>
+  {% else %}  
     <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
-{% endif %}
+  {% endif %}
 </div>
 {% endblock %}

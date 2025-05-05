@@ -48,4 +48,8 @@ footer p {
     color: #212529;
     transform: translateX(-3px);
 }
-    
+
+.footer-small {
+    padding: 5px 0; /* Reduce el espacio interno */
+    font-size: 14px; /* Opcional: Ajusta el tamaño de la fuente */
+}

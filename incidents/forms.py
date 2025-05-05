@@ -3,22 +3,22 @@ from .models import Incident
 
 class IncidentForm(forms.ModelForm):
 
-  class Meta:
-    model = Incident
-    fields = ['id_servicio', 'nombre_anillo', 'nombre_cliente', 'nit', 'nombre_contacto',
-      'numero_contacto', 'correo_contacto', 'direccion_servicio', 'ip', 'observaciones']
-    widgets = {
-      'id_servicio': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'nombre_anillo': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'nombre_cliente': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'nit': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'nombre_contacto': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'numero_contacto': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'correo_contacto': forms.EmailInput(attrs={'class': 'form-control mb-2'}),
-      'direccion_servicio': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'ip': forms.TextInput(attrs={'class': 'form-control mb-2'}),
-      'observaciones': forms.Textarea(attrs={'class': 'form-control mb-3'}), 
-    }
+    class Meta:
+        model = Incident
+        fields = ['id_servicio', 'nombre_anillo', 'nombre_cliente', 'nit', 'nombre_contacto',
+        'numero_contacto', 'correo_contacto', 'direccion_servicio', 'ip', 'observaciones']
+        widgets = {
+        'id_servicio': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'nombre_anillo': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'nombre_cliente': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'nit': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'nombre_contacto': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'numero_contacto': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'correo_contacto': forms.EmailInput(attrs={'class': 'form-control mb-2'}),
+        'direccion_servicio': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'ip': forms.TextInput(attrs={'class': 'form-control mb-2'}),
+        'observaciones': forms.Textarea(attrs={'class': 'form-control mb-3'}), 
+        }
 
 class AperturaEntreClientesForm(forms.Form):
     nro_incidente = forms.CharField(
@@ -49,6 +49,9 @@ class AperturaEntreClientesForm(forms.Form):
     telefono_b = forms.CharField(
         max_length=15, 
         label='Teléfono Extremo B')
+    correo_b = forms.EmailField(
+        max_length=100,
+        label='Correo Extremo B')
     ip_switch_b = forms.CharField(
         max_length=15, 
         label='IP Switch Extremo B')
@@ -58,29 +61,26 @@ class AperturaEntreClientesForm(forms.Form):
         super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base
 
 class EquipoCaidoForm(forms.Form):
-  nro_incidente = forms.CharField(
-    max_length=30,
-    label='Número de incidente',
-    required=False)    
-  ciudad = forms.CharField(
-    max_length=30,
-    label='Ciudad',
-    required=False)
-  ip_sw_vecinoA = forms.CharField(
-    max_length=15, 
-    label='IP Switch Vecino A',
-    required=False)
-  ip_sw_vecinoB = forms.CharField(
-    max_length=15, 
-    label='IP Switch Vecino B',
-    required=False)
-  fecha_caida = forms.CharField(
-    max_length=30,
-    label='Fecha de caída')
+    nro_incidente = forms.CharField(
+        max_length=30,
+        label='Número de incidente',
+        required=False)    
+    ciudad = forms.CharField(
+        max_length=30,
+        label='Ciudad',
+        required=False)
+    ip_sw_vecinoA = forms.CharField(
+        max_length=15, 
+        label='IP Switch Vecino A',
+        required=False)
+    ip_sw_vecinoB = forms.CharField(
+        max_length=15, 
+        label='IP Switch Vecino B',
+        required=False)
     
-  def __init__(self, *args, **kwargs):
-    self.incident = kwargs.pop('incident', None)  # Extraer el argumento 'incident'
-    super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base
+    def __init__(self, *args, **kwargs):
+        self.incident = kwargs.pop('incident', None)  # Extraer el argumento 'incident'
+        super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base
 
 class NotaLlamadaForm(forms.Form):
     id_llamada1 = forms.CharField(
@@ -152,3 +152,20 @@ class AlarmaPotencias(forms.Form):
         self.incident = kwargs.pop('incident', None)  # Extraer el argumento 'incident'
         super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base
 
+class TicketApDobleUnoForm(forms.Form):
+    ciudad = forms.CharField(
+        max_length=30,
+        label='Ciudad')
+    disponibilidad = forms.CharField(
+        max_length=20, 
+        label='Disponibilidad')
+    descartes = forms.CharField(
+        widget=forms.Textarea(attrs=
+            {'class': 'form-control',
+            'rows': 5
+        }), 
+        label="Descartes Realizados")
+
+    def __init__(self, *args, **kwargs):
+        self.incident = kwargs.pop('incident', None)  # Extraer el argumento 'incident'
+        super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base

@@ -1,9 +1,11 @@
-{% extends 'core/base.html' %} {% load static %} {% block title
-%}{{incident.id_servicio}}{% endblock %} {% block content %} {% include
-'incidents/includes/incidents_menu.html' %}
+{% extends 'core/base.html' %} 
+{% load static %} 
+{% block title%} {{incident.id_servicio}} {% endblock %} 
+{% block content %} 
+{% include 'incidents/includes/incidents_menu.html' %}
 <main role="main">
   <div class="container">
-    <!-- DATOS DEL INCIDENTE -->
+    <!--TITULO Y BOTÓN REGRESAR-->
     <div class="row my-2">
       <div class="col-md-11">
         <h2 class="section-heading mb-4">{{incident.id_servicio}}</h2>
@@ -18,50 +20,51 @@
           </a>
         </div>
       </div>
-      <div class="col-md-12 mx-auto">
-        <div>
-          <table class="table table-bordered table-striped table-hover">
-            <tbody>
-              <tr>
-                <td><strong>Nombre del Anillo</strong></td>
-                <td>{{ incident.nombre_anillo|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>Nombre del Anillo</strong></td>
-                <td>{{ incident.nombre_cliente|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>NIT del Cliente</strong></td>
-                <td>{{ incident.nit|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>Nombre de Contacto</strong></td>
-                <td>{{ incident.nombre_contacto|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>Número de Contacto</strong></td>
-                <td>{{ incident.numero_contacto|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>Correo de Contacto</strong></td>
-                <td>{{ incident.correo_contacto|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>Dirección del Servicio</strong></td>
-                <td>{{ incident.direccion_servicio|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>IP del Equipo</strong></td>
-                <td>{{ incident.ip|safe }}</td>
-              </tr>
-              <tr>
-                <td><strong>Observaciones</strong></td>
-                <td>{{ incident.observaciones|safe }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <!-- DATOS DEL INCIDENTE -->
+    <div class="col-md-12 mx-auto">
+      <div>
+        <table class="table table-bordered table-striped table-hover">
+          <tbody>
+            <tr>
+              <td><strong>Nombre del Anillo</strong></td>
+              <td>{{ incident.nombre_anillo|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>Nombre del Anillo</strong></td>
+              <td>{{ incident.nombre_cliente|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>NIT del Cliente</strong></td>
+              <td>{{ incident.nit|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>Nombre de Contacto</strong></td>
+              <td>{{ incident.nombre_contacto|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>Número de Contacto</strong></td>
+              <td>{{ incident.numero_contacto|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>Correo de Contacto</strong></td>
+              <td>{{ incident.correo_contacto|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>Dirección del Servicio</strong></td>
+              <td>{{ incident.direccion_servicio|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>IP del Equipo</strong></td>
+              <td>{{ incident.ip|safe }}</td>
+            </tr>
+            <tr>
+              <td><strong>Observaciones</strong></td>
+              <td>{{ incident.observaciones|safe }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
     </div>
     <!-- BOTONES -->
     <div class="row">
@@ -79,29 +82,34 @@
           >
           <a
             href="{% url 'incidents:equipo_caido' incident.id incident.id_servicio|slugify %}"
-            class="btn btn-dark btn-sm"
+            class="btn btn-success btn-sm"
             >Equipo Caído</a
           >
           <a
-            href="{% url 'incidents:llamada_saliente' incident.id incident.id_servicio|slugify %}"
-            class="btn btn-dark btn-sm"
-            >Llamada Saliente</a
-          >
-          <a
             href="{% url 'incidents:apertura_entre_clientes' incident.id incident.id_servicio|slugify %}"
-            class="btn btn-dark btn-sm"
+            class="btn btn-success btn-sm"
             >Apertura Entre Clientes</a
           >
           <a
             href="{% url 'incidents:apertura_contra_central' incident.id incident.id_servicio|slugify %}"
-            class="btn btn-dark btn-sm"
+            class="btn btn-success btn-sm"
             >Apertura Contra Central</a
           >
           <a
             href="{% url 'incidents:alarma_potencias' incident.id incident.id_servicio|slugify %}"
-            class="btn btn-dark btn-sm"
+            class="btn btn-success btn-sm"
             >Potencias Alarmadas</a
           >
+          <a
+            href="{% url 'incidents:llamada_saliente' incident.id incident.id_servicio|slugify %}"
+            class="btn btn-success btn-sm"
+            >Llamada Saliente</a
+          >
+          <a
+          href="{% url 'incidents:ticket_ap_doble_uno' incident.id incident.id_servicio|slugify %}"
+          class="btn btn-success btn-sm"
+          >Apertura Doble [1 CLiente]</a
+          >  
         </div>
       </div>
     </div>

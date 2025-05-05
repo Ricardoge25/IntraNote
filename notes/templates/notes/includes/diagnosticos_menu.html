@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <span class="navbar-brand" href="#"><i>Notas</i></span>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNotes"
+      aria-controls="navbarNotes"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse justify-content-center"
+      id="navbarNotes"
+    >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link {% if request.resolver_match.url_name == 'nota_ap_doble' %}active{% endif %}"
+            href="{% url 'nota_ap_doble' %}"
+            >Apertura Doble</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link {% if request.resolver_match.url_name == 'nota_ap_simple_clientes' %}active{% endif %}"
+            href="{% url 'nota_ap_simple_clientes' %}"
+            >Apertura Simple Clientes</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link {% if request.resolver_match.url_name == 'nota_ap_simple_central' %}active{% endif %}"
+            href="{% url 'nota_ap_simple_central' %}"
+            >Apertura Simple Central</a
+          >
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link {% if request.resolver_match.url_name == 'nota_potencias_alarmadas' %}active{% endif %}" 
+            href="{% url 'nota_potencias_alarmadas' %}"
+            >Potencias Alarmadas</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

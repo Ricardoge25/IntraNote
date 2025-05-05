@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load incidents_extra %}
+{% block title %}Apertura Simple contra Central{% endblock %}
+{% block content %}
+{% include 'notes/includes/diagnosticos_menu.html'%}
+
+<div class="container mb-4 mt-3">
+  <div class="row mt-2">
+    <div class="col-md-11">
+      <h2>Diagnóstico de Apertura Simple contra Central</h2>
+    </div>
+    <div class="col-md-1">
+      <div class="mb-3">
+        <a href="javascript:history.back()" class="btn btn-light border-0 shadow-sm rounded-3 px-4 py-2">
+        <i class="fa fa-arrow-left m-2 text-dark"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!--FORMULARIO-->
+  <div class="container mt-4">
+    <form method="post" autocomplete="on">
+      {% csrf_token %}
+      <div class="row">
+        {% for field in form %}
+          {% if forloop.counter <= 2 %}
+            <div class="col-md-4 mx-auto"> 
+              <div class="form-group">
+                {{ field.label}}
+                {{ field|add_class:"form-control mt-1" }}
+              </div>
+            </div>
+          {% elif forloop.counter > 2 and forloop.counter <= 10 %}
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ field.label}}
+                {{ field|add_class:"form-control mt-1" }}
+              </div>
+            </div>
+          {% else %}
+            <div class="col-md-4">
+              <div class="form-group">
+                {{ field.label}}
+                {{ field|add_class:"form-control mt-1" }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="text-center"> <!-- Centra el botón -->
+        <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>
+      </div>
+    </form>
+  </div>
+  {% if texto %}
+    <div class="container mt-2">
+      <h3>Texto Generado</h3>
+      <div class="form-group">
+        <textarea class="form-control" id="resultado" rows="25" readonly>{{ texto }}</textarea>
+      </div>
+    </div>
+    {% else %}  
+      <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
+  {% endif %}
+</div>
+{% endblock %}

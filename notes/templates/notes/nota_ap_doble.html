@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load incidents_extra %}
+{% block title %}Diagnóstico equipo caído{% endblock %}
+{% block content %}
+{% include 'notes/includes/diagnosticos_menu.html'%}
+
+<div class="container mb-4 mt-3">
+  <div class="row mt-2">
+    <div class="col-md-11">
+      <h2>Diagnóstico de Apertura Doble</h2>
+    </div>
+    <div class="col-md-1">
+      <div class="mb-3">
+        <a href="javascript:history.back()" class="btn btn-light border-0 shadow-sm rounded-3 px-4 py-2">
+        <i class="fa fa-arrow-left m-2 text-dark"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!--FORMULARIO-->
+  <div class="container mt-4">
+    <form method="post" autocomplete="on">
+      {% csrf_token %}
+      <div class="row justify-content-center">
+        {% for field in form %}
+          <div class="col-md-3">
+            <div class="form-group">
+              {% if field.field.widget.input_type == "checkbox" %}
+                <div class="form-check">
+                  <label class="form-check-label d-block mb-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  {{ field|add_class:"form-check-input custom-checkbox" }}
+                </div>
+              {% else %}
+                {{ field.label}}
+                {{ field|add_class:"form-control mt-1" }}
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="text-center"> <!-- Centra el botón -->
+        <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>
+      </div>
+    </form>
+  </div>
+
+<style>
+  .custom-checkbox {
+    width: 25px;
+    height: 25px;
+    margin-left: 25px;
+  }
+
+  .form-check-label {
+    font-size: 16px; 
+    font-weight: 400;
+    color: #212529;
+    margin-bottom: 5px;
+  }
+</style>
+
+{% if texto %}
+  <div class="container mt-2">
+    <h3>Texto Generado</h3>
+    <div class="form-group">
+      <textarea class="form-control" id="resultado" rows="10" readonly>{{ texto }}</textarea>
+    </div>
+  </div>
+  {% else %}  
+    <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
+{% endif %}
+  </div>
+{% endblock %}
+

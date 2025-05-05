@@ -15,8 +15,6 @@
             <p>{{incident.direccion_servicio|striptags|safe|truncatechars:"200"}}</p>
             <p>{{incident.ip|striptags|safe|truncatechars:"200"}}</p>
             <p>{{incident.observaciones|striptags|safe|truncatechars:"200"}}</p>
-
-            
               <a href="{% url 'incidents:incident' incident.id incident.id_servicio|slugify  %}" 
               class="btn btn-info btn-sm">Leer más</a>
             | <a href="{% url 'incidents:update' incident.id  %}" 
