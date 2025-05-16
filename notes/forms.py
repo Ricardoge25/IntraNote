@@ -131,3 +131,67 @@ class potencias_alarmadas_form(forms.Form):
     max_length=30, 
     label='Potencia (Rx)')
   
+class llamada_form(forms.Form):
+  nombre_contacto = forms.CharField(
+    max_length=30, 
+    label='Nombre Contacto')
+  numero_contacto = forms.CharField(
+    max_length=30, 
+    label='Número Contacto')
+  id_llamada_1 = forms.CharField(
+    max_length=30, 
+    label='ID Llamada')
+  id_llamada_2 = forms.CharField(
+    max_length=30, 
+    label='ID Llamada',
+    required=False)
+  id_llamada_3 = forms.CharField(
+    max_length=30, 
+    label='ID Llamada',
+    required=False)
+  avances = forms.CharField(
+    widget=forms.Textarea(attrs=
+      {'class': 'form-control',
+      'rows': 5
+    }), 
+    label="Avances Realizados",)
+
+class escalamiento_form(forms.Form):
+  horario = forms.CharField(
+    max_length=30, 
+    label='Horario')
+  nombre_contacto = forms.CharField(
+    max_length=30, 
+    label='Nombre Contacto')
+  numero_contacto = forms.CharField(
+    max_length=30, 
+    label='Número Contacto')
+  direccion = forms.CharField(
+    max_length=100, 
+    label='Dirección')
+  acceso = forms.BooleanField(
+    label='¿Tiene acceso?',
+    required=False)
+  permisos = forms.BooleanField(
+    label='¿Requiere permisos?',
+    required=False)
+  parafiscales = forms.BooleanField(
+    label='¿Requiere parafiscales?',
+    required=False)
+  cursos = forms.BooleanField(
+    label='¿Requiere cursos?',
+    required=False)
+  equipo = forms.BooleanField(
+    label='¿Requiere equipo?',
+    required=False)
+  referencia_equipo = forms.CharField(
+    max_length=100, 
+    label='Referencia Equipo')
+  observaciones = forms.CharField(
+    widget=forms.Textarea(attrs=
+      {'class': 'form-control',
+      'rows': 5
+    }), 
+    label="Observaciones",
+    required=False)
+  
