@@ -19,25 +19,47 @@
       id="navbarNotes"
     >
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="{% url 'nota_ap_doble' %}"
+        <li class="nav-item ">
+          <a 
+            class="nav-link {% if request.resolver_match.url_name == 'nota_ap_doble' %}active{% endif %}" 
+            href="{% url 'nota_ap_doble' %}"
             >Diagnósticos</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Llamada</a>
+          <a 
+            class="nav-link {% if request.resolver_match.url_name == 'nota_llamada' %}active{% endif %}" 
+            href="{% url 'nota_llamada' %}"
+            >Llamada</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Correo</a>
+          <a 
+            class="nav-link {% if request.resolver_match.url_name == 'nota_correo_saliente' %}active{% endif %}" 
+            href="{% url 'nota_correo_saliente' %}"
+            >Correo</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Reprueba</a>
+          <a 
+            class="nav-link" 
+            href="#"
+            >Reprueba</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Resolución</a>
+          <a 
+            class="nav-link" 
+            href="#"
+            >Resolución</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Comunicación Especialista</a>
+          <a 
+            class="nav-link" 
+            href="#"
+            >Comunicación Especialista</a
+          >
         </li>
       </ul>
     </div>

@@ -173,3 +173,105 @@ class nota_potencias_alarmadas(BaseIncidentView):
 
 
 S3GU1M13NT0_3V3NT0S:d1agnostico"""
+  
+class nota_llamada(BaseIncidentView):
+  template_name = 'notes/nota_llamada.html'
+  form_class = forms.llamada_form
+
+  def generar_texto(self, form):
+    nombre_contacto = form.cleaned_data['nombre_contacto']
+    numero_contacto = form.cleaned_data['numero_contacto']
+    id_llamada_1 = form.cleaned_data['id_llamada_1']
+    id_llamada_2 = form.cleaned_data['id_llamada_2']
+    id_llamada_3 = form.cleaned_data['id_llamada_3']
+    avances = form.cleaned_data['avances']
+
+    texto = f"""
+De acuerdo con la comunicación establecida Nombre: {nombre_contacto} Teléfono: {numero_contacto} hemos registrado su llamada con el siguiente avance: 
+
+{avances}
+
+Seguiremos gestionando su caso en pro de una solución oportuna.
+
+ID llamada: {id_llamada_1} """
+    
+    if id_llamada_2:
+        texto = texto + f"""/ {id_llamada_2} """
+    if id_llamada_3:
+        texto = texto + f"""/ {id_llamada_3}"""
+
+    texto = texto + f"""
+
+    
+S3GU1M13NT0_3V3NT0S:llamadaalcliente
+"""
+    
+    return texto
+  
+class nota_correo_saliente(BaseIncidentView):
+  template_name = 'notes/nota_correo_saliente.html'
+
+  def get(self, request):
+    texto = """
+Se envía respuesta a los interesados en el correo adjunto.
+
+
+S3GU1M13NT0_3V3NT0S:correoalcliente
+"""
+    return render(request, self.template_name, {
+      'texto': texto
+    })
+  
+class nota_correo_entrante(BaseIncidentView):
+  template_name = 'notes/nota_correo_entrante.html'
+
+  def get(self, request):
+    texto = """
+Se brinda respuesta a la solicitud del cliente en el correo adjunto. 
+
+
+S3GU1M13NT0_3V3NT0S:correodelcliente
+"""
+    return render(request, self.template_name, {
+      'texto': texto
+    })
+
+class nota_escalamiento(BaseIncidentView):
+  template_name = 'notes/nota_escalamiento.html'
+  form_class = forms.escalamiento_form
+
+  def generar_texto(self, form):
+    horario = form.cleaned_data['horario']
+    nombre_contacto = form.cleaned_data['nombre_contacto']
+    numero_contacto = form.cleaned_data['numero_contacto']
+    acceso = form.cleaned_data['acceso']
+    direccion = form.cleaned_data['direccion']
+    permisos = form.cleaned_data['permisos']
+    parafiscales = form.cleaned_data['parafiscales']
+    cursos = form.cleaned_data['cursos']
+    equipo = form.cleaned_data['equipo']
+    referencia_equipo = form.cleaned_data['referencia_equipo']
+    observaciones = form.cleaned_data['observaciones']
+
+    permisos_texto = "No requiere permisos" if not permisos else "Requiere permisos"
+    parafiscales_texto = "No requiere parafiscales" if not parafiscales else "Requiere parafiscales"
+    cursos_texto = "No requiere cursos" if not cursos else "Requiere cursos"
+    equipo_texto = "No requiere equipo" if not equipo else "Requiere equipo"
+    acceso_texto = "No tiene acceso" if not acceso else "Tiene acceso"
+
+    texto = f"""
+Horario: {horario}
+Nombre Contacto en Sitio: {nombre_contacto}
+Teléfonos Contacto en Sitio: {numero_contacto}
+Contacto en sitio, tiene acceso a los CPE: {acceso_texto}
+Dirección: {direccion}
+Permisos de ingreso: {permisos_texto}
+Parafiscales: {parafiscales_texto}
+Requiere Curso: {cursos_texto}
+Requiere llevar equipo: {equipo_texto}
+Tipo de equipo (Referencia) y cantidad: {referencia_equipo}
+Observaciones detalladas: {observaciones}
+"""
+
+    return texto
+

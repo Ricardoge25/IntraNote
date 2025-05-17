@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load incidents_extra %}
+{% block title %}Nota Correo{% endblock %}
+{% block content %}
+{% include 'notes/includes/correo_menu.html'%}
+
+
+<div class="container mb-4 mt-3">
+  <div class="row mt-2">
+    <div class="col-md-11">
+      <h2>Nota de Correo Entrante</h2>
+    </div>
+    <div class="col-md-1">
+      <div class="mb-3">
+        <a href="javascript:history.back()" class="btn btn-light border-0 shadow-sm rounded-3 px-4 py-2">
+          <i class="fa fa-arrow-left m-2 text-dark"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <h3>Texto Generado</h3>
+    <div class="form-group">
+      <textarea class="form-control" id="resultado" rows="5" readonly>{{ texto }}</textarea>
+      <button class="btn btn-outline-success mt-3" onclick="copiarTexto('resultado')">Copiar</button>
+    </div>
+  </div>
+</div>
+{% block scripts %}
+<script>
+  function copiarTexto(id) {
+    // Obtiene el elemento del textarea por su ID
+    const textarea = document.getElementById(id);
+    if (textarea) {
+      // Selecciona el texto dentro del textarea
+      textarea.select();
+      textarea.setSelectionRange(0, 99999); 
+      // Copia el texto al portapapeles
+      document.execCommand("copy");
+      // Muestra un mensaje temporal
+      mostrarMensaje("Texto copiado al portapapeles");
+    }
+  }
+
+  function mostrarMensaje(mensaje) {
+    // Crea un elemento div para el mensaje
+    const mensajeDiv = document.createElement("div");
+    mensajeDiv.textContent = mensaje;
+    mensajeDiv.style.position = "fixed";
+    mensajeDiv.style.top = "100px"; // Posición en la parte superior
+    mensajeDiv.style.left = "50%"; // Centrado horizontalmente
+    mensajeDiv.style.transform = "translateX(-50%)"; // Ajusta el centrado
+    mensajeDiv.style.backgroundColor = "#020024"; // Color verde (igual que btn-success)
+    mensajeDiv.style.color = "white";
+    mensajeDiv.style.padding = "20px 50px"; // Más grande
+    mensajeDiv.style.borderRadius = "8px"; // Bordes más redondeados
+    mensajeDiv.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+    mensajeDiv.style.zIndex = "1000";
+    mensajeDiv.style.fontSize = "16px"; // Texto más grande
+    mensajeDiv.style.fontWeight = "bold"; // Texto en negrita
+    mensajeDiv.style.textAlign = "center"; // Centrar el texto
+    mensajeDiv.style.opacity = "1"; // Totalmente visible
+    mensajeDiv.style.transition = "opacity 1s ease"; // Transición suave de opacidad
+
+    // Agrega el mensaje al cuerpo del documento
+    document.body.appendChild(mensajeDiv);
+
+    // Reduce la opacidad después de 4 segundos
+    setTimeout(() => {
+      mensajeDiv.style.opacity = "0"; // Desaparece gradualmente
+    }, 800);
+
+    // Elimina el mensaje después de 5 segundos
+    setTimeout(() => {
+      mensajeDiv.remove();
+    }, 1800);
+  }
+</script>
+{% endblock %}
+{% endblock %}
