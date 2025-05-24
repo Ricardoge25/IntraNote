@@ -169,3 +169,57 @@ class TicketApDobleUnoForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.incident = kwargs.pop('incident', None)  # Extraer el argumento 'incident'
         super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base
+
+class TicketApDobleDosForm(forms.Form):
+    ciudad = forms.CharField(
+        max_length=30,
+        label='Ciudad')
+    disponibilidad = forms.CharField(
+        max_length=20,
+        label='Disponibilidad')
+    descartes_extremo_A = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 5
+        }),
+        label='Descartes Realizados Extremo A')
+    nombre_cliente_extremo_B = forms.CharField(
+        max_length=40,
+        label='Nombre Cliente Extremo B')
+    ip_switch_extremo_B = forms.CharField(
+        max_length=15,
+        label='IP Switch Extremo B')
+    contacto_extremo_B = forms.CharField(
+        max_length=40,
+        label='Contacto Extremo B')
+    numero_contacto_extremo_B = forms.CharField(
+        max_length=10,
+        label='Número de Contacto Extremo B')
+    correo_contacto_extremo_B = forms.EmailField(
+        max_length=100,
+        label='Correo Contacto Extremo B')
+    direccion_extremo_B = forms.CharField(
+        max_length=100,
+        label='Dirección Extremo B')
+    dispinibilidad_extremo_B = forms.CharField(
+        max_length=20,
+        label='Disponibilidad Extremo B')
+    descartes_extremo_B = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 5
+        }),
+        label='Descartes Realizados Extremo B')
+    
+    def __init__(self, *args, **kwargs):
+        self.incident = kwargs.pop('incident', None)  # Extraer el argumento 'incident'
+        super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base
+
+class RetiroEmpalmeForm(forms.Form):
+    ciudad = forms.CharField(
+        max_length=30,
+        label='Ciudad')
+
+    def __init__(self, *args, **kwargs):
+        self.incident = kwargs.pop('incident', None)  # Extraer el argumento 'incident'
+        super().__init__(*args, **kwargs)  # Llamar al constructor de la clase base

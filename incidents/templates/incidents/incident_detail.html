@@ -105,14 +105,30 @@
             class="btn btn-success btn-sm"
             >Llamada Saliente</a
           >
-          <a
-          href="{% url 'incidents:ticket_ap_doble_uno' incident.id incident.id_servicio|slugify %}"
-          class="btn btn-success btn-sm"
-          >Apertura Doble [1 CLiente]</a
-          >  
+          
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 text-right mt-3">
+        <div class="contenedor d-flex justify-content-around">
+          <a
+            href="{% url 'incidents:ticket_ap_doble_uno' incident.id incident.id_servicio|slugify %}"
+            class="btn btn-success btn-sm"
+            >Apertura Doble [1 CLiente]</a
+          > 
+          <a
+            href="{% url 'incidents:ticket_ap_doble_dos' incident.id incident.id_servicio|slugify %}"
+            class="btn btn-success btn-sm"
+            >Apertura Doble [2 Clientes]</a
+          >
+          <a
+            href="{% url 'incidents:retiro_empalme' incident.id incident.id_servicio|slugify %}"
+            class="btn btn-success btn-sm"
+            >Retiro desde el Empalme</a
+          >
+        </div>
+      </div>
   </div>
 </main>
 {% endblock %}

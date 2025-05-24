@@ -1,0 +1,138 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load incidents_extra %}
+{% block title %}Ticket AP Doble{% endblock %}
+{% block content %}
+{% include 'incidents/includes/incidents_menu.html'%}
+
+<div class="container mb-4 mt-3">
+  <!--TITULO Y BOTÓN REGRESAR-->
+  <div class="row mt-2">
+    <div class="col-md-11">
+      <h2>TICKET DE APERTURA DOBLE [2 O MÁS CLIENTES]</h2>
+    </div>
+    <div class="col-md-1">
+      <div class="mb-3">
+        <a href="javascript:history.back()" class="btn btn-light border-0 shadow-sm rounded-3 px-4 py-2">
+        <i class="fa fa-arrow-left m-2 text-dark"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!--FORMULARIO-->
+  <div class="container">
+    <form method="post" autocomplete="on">
+      {% csrf_token %}
+      <div class="row">
+        {% for field in form %}
+          {% if forloop.counter <= 2 %}
+            <div class="col-md-4 mx-auto"> 
+              <div class="form-group">
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control" }}
+              </div>
+            </div>
+          {% elif forloop.counter >= 4 %}
+            <div class="col-md-7 mx-auto">
+              <div class="form-group">
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control" }}
+              </div>
+            </div>
+          {% elif forloop.counter == 3 or forloop.counter == 12 %}
+            <div class="col-md-12">
+              <div class="form-group">
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control" }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <!-- Campos ocultos para mantener los textos -->
+        <input type="hidden" name="resumen" value="{{ resumen }}">
+        <input type="hidden" name="descripcion" value="{{ descripcion }}">
+        <div class="text-center">
+          <button type="submit" name="action" value="resumen" class="btn btn-success mt-2 mb-3">Generar Resumen</button>
+          <button type="submit" name="action" value="descripcion" class="btn btn-success mt-2 mb-3">Generar Descripción</button>
+        </div>
+    </form>
+  </div>
+  <!--SALIDA DEL FORMULARIO-->
+  {% if resumen %}
+  <div class="container mt-2">
+    <h3>Resumen</h3>
+    <div class="form-group">
+      <textarea class="form-control" id="resultado1" rows="1" readonly>{{ resumen }}</textarea>
+      <button class="btn btn-outline-success mt-3" onclick="copiarTexto('resultado1')">Copiar Resumen</button>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if descripcion %}
+    <div class="container mt-2">
+      <h3>Descripción</h3>
+      <div class="form-group">
+        <textarea class="form-control" id="resultado2" rows="22" readonly>{{ descripcion }}</textarea>
+        <button class="btn btn-outline-success mt-3" onclick="copiarTexto('resultado2')">Copiar Descripción</button>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if not resumen and not descripcion %}  
+    <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
+  {% endif %}
+</div>
+
+<script>
+  function copiarTexto(id) {
+    // Obtiene el elemento del textarea por su ID
+    const textarea = document.getElementById(id);
+    if (textarea) {
+      // Selecciona el texto dentro del textarea
+      textarea.select();
+      textarea.setSelectionRange(0, 99999); // Para dispositivos móviles
+      // Copia el texto al portapapeles
+      document.execCommand("copy");
+
+      // Muestra un mensaje temporal
+      mostrarMensaje("Texto copiado al portapapeles");
+    }
+  }
+
+  function mostrarMensaje(mensaje) {
+    // Crea un elemento div para el mensaje
+    const mensajeDiv = document.createElement("div");
+    mensajeDiv.textContent = mensaje;
+    mensajeDiv.style.position = "fixed";
+    mensajeDiv.style.top = "100px"; // Posición en la parte superior
+    mensajeDiv.style.left = "50%"; // Centrado horizontalmente
+    mensajeDiv.style.transform = "translateX(-50%)"; // Ajusta el centrado
+    mensajeDiv.style.backgroundColor = "#020024"; // Color verde (igual que btn-success)
+    mensajeDiv.style.color = "white";
+    mensajeDiv.style.padding = "20px 50px"; // Más grande
+    mensajeDiv.style.borderRadius = "8px"; // Bordes más redondeados
+    mensajeDiv.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+    mensajeDiv.style.zIndex = "1000";
+    mensajeDiv.style.fontSize = "16px"; // Texto más grande
+    mensajeDiv.style.fontWeight = "bold"; // Texto en negrita
+    mensajeDiv.style.textAlign = "center"; // Centrar el texto
+    mensajeDiv.style.opacity = "1"; // Totalmente visible
+    mensajeDiv.style.transition = "opacity 1s ease"; // Transición suave de opacidad
+
+    // Agrega el mensaje al cuerpo del documento
+    document.body.appendChild(mensajeDiv);
+
+    // Reduce la opacidad después de 4 segundos
+    setTimeout(() => {
+      mensajeDiv.style.opacity = "0"; // Desaparece gradualmente
+    }, 800);
+
+    // Elimina el mensaje después de 5 segundos
+    setTimeout(() => {
+      mensajeDiv.remove();
+    }, 1800);
+  }
+</script>
+{% endblock %}
+

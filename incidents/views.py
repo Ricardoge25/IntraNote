@@ -265,7 +265,7 @@ class DiagnosticoPotencias(BaseIncidentView):
     """
 
 class TicketApDobleUno(BaseIncidentView):
-    template_name = 'incidents/ticket_ap_doble_1.html'
+    template_name = 'incidents/ticket_ap_doble_uno.html'
     form_class = forms.TicketApDobleUnoForm
 
     def generar_texto(self, form, incident):
@@ -299,19 +299,129 @@ NOTA: Se debe garantizar que al cerrar el anillo los niveles de potencia queden 
         incident = get_object_or_404(Incident, pk=incident_id)
         form = self.form_class(request.POST, incident=incident)
 
-        # Inicializa los textos como vacíos
         resumen = None
         descripcion = None
 
         if form.is_valid():
             resumen_text, descripcion_text = self.generar_texto(form, incident)
-            action = request.POST.get('action')  # Identifica qué botón fue presionado
+            action = request.POST.get('action') 
             if action == 'resumen':
                 resumen = resumen_text
             elif action == 'descripcion':
                 descripcion = descripcion_text
 
-        # Mantén los textos existentes en el contexto
+        return render(request, self.template_name, {
+            'form': form,
+            'incident': incident,
+            'resumen': resumen or request.POST.get('resumen'),
+            'descripcion': descripcion or request.POST.get('descripcion'),
+        })
+
+class TicketApDobleDos(BaseIncidentView):
+    template_name = 'incidents/ticket_ap_doble_dos.html'
+    form_class = forms.TicketApDobleDosForm
+
+    def generar_texto(self, form, incident):
+        ciudad = form.cleaned_data['ciudad']
+        disponibilidad = form.cleaned_data['disponibilidad']
+        descartes_extremo_A = form.cleaned_data['descartes_extremo_A']
+        nombre_cliente_extremo_B = form.cleaned_data['nombre_cliente_extremo_B']
+        ip_switch_extremo_B = form.cleaned_data['ip_switch_extremo_B']
+        contacto_extremo_B = form.cleaned_data['contacto_extremo_B']
+        numero_contacto_extremo_B = form.cleaned_data['numero_contacto_extremo_B']
+        correo_contacto_extremo_B = form.cleaned_data['correo_contacto_extremo_B']
+        direccion_extremo_B = form.cleaned_data['direccion_extremo_B']
+        disponibilidad_extremo_B = form.cleaned_data['dispinibilidad_extremo_B']
+        descartes_extremo_B = form.cleaned_data['descartes_extremo_B']
+
+        resumen = f"""
+Se presenta apertura doble en el anillo {incident.nombre_anillo} entre los clientes {incident.nombre_cliente} y {nombre_cliente_extremo_B}"""
+        
+        descripcion = f"""{resumen} 
+
+ANILLO: {incident.nombre_anillo}
+CIUDAD: {ciudad}
+NOMBRE CLIENTE CAÍDO EXTREMO A: {incident.nombre_cliente}
+IP SWITCH CLIENTE EXTREMO A: {incident.ip}
+CONTACTO CLIENTE CAÍDO EXTREMO A: {incident.nombre_contacto}
+TELÉFONO CLIENTE CAÍDO EXTREMO A: {incident.numero_contacto}
+CORREO CLIENTE CAÍDO EXTREMO A: {incident.correo_contacto}
+DIRECCIÓN CLIENTE CAÍDO EXTREMO A: {incident.direccion_servicio}
+DISPONIBILIAD HORARIA CLIENTE EXTREMO A: {disponibilidad}
+DESCARTES REALIZADOS: {descartes_extremo_A}
+
+NOMBRE CLIENTE EXTREMO B: {nombre_cliente_extremo_B}
+IP SWITCH CLIENTE EXTREMO B: {ip_switch_extremo_B}
+CONTACTO CLIENTE CAÍDO EXTREMO B: {contacto_extremo_B}
+TELÉFONO CLIENTE CAÍDO EXTREMO B: {numero_contacto_extremo_B}
+CORREO CLIENTE CAÍDO EXTREMO B: {correo_contacto_extremo_B}
+DIRECCIÓN CLIENTE CAÍDO EXTREMO B: {direccion_extremo_B}
+DISPONIBILIAD HORARIA CLIENTE EXTREMO B: {disponibilidad_extremo_B}
+DESCARTES REALIZADOS: {descartes_extremo_B} 
+"""
+        
+        return resumen, descripcion
+    
+    def post(self, request, incident_id, *args, **kwargs):
+        incident = get_object_or_404(Incident, pk=incident_id)
+        form = self.form_class(request.POST, incident=incident)
+
+        resumen = None
+        descripcion = None
+
+        if form.is_valid():
+            resumen_text, descripcion_text = self.generar_texto(form, incident)
+            action = request.POST.get('action')  
+            if action == 'resumen':
+                resumen = resumen_text
+            elif action == 'descripcion':
+                descripcion = descripcion_text
+
+        return render(request, self.template_name, {
+            'form': form,
+            'incident': incident,
+            'resumen': resumen or request.POST.get('resumen'),
+            'descripcion': descripcion or request.POST.get('descripcion'),
+        })
+    
+class TicketRetiroEmpalme(BaseIncidentView):
+    template_name = 'incidents/retiro_empalme.html'
+    form_class = forms.RetiroEmpalmeForm
+
+    def generar_texto(self, form, incident):
+        ciudad = form.cleaned_data['ciudad'].upper()
+
+        resumen = f"""
+Se requiere realizar retiro desde el empalme del cliente "{incident.nombre_cliente}" ubicado en el anillo "{incident.nombre_anillo}", el cual se encuentra apagado por más de 48 horas *MONITOREO PROACTIVO*
+"""
+        descripcion = f"""{resumen} 
+ANILLO: {incident.nombre_anillo}
+IP SWITCH: {incident.ip}
+CIUDAD: {ciudad}
+IDENTIFICADOR: {incident.id_servicio}
+NOMBRE CLIENTE: {incident.nombre_cliente}
+CONTACTO CLIENTE: {incident.nombre_contacto}
+TELÉFONO CLIENTE: {incident.numero_contacto}
+DIRECCIÓN CLIENTE: {incident.direccion_servicio}
+DISPONIBILIDAD CLIENTE: {incident.observaciones or 'L-V 8:00 - 16:00'}
+"""
+        return resumen, descripcion
+    
+    def post(self, request, incident_id, *args, **kwargs):
+        incident = get_object_or_404(Incident, pk=incident_id)
+        form = self.form_class(request.POST, incident=incident)
+
+        resumen = None
+        descripcion = None
+
+        if form.is_valid():
+            resumen_text, descripcion_text = self.generar_texto(form, incident)
+            action = request.POST.get('action')
+            if action == 'resumen':
+                resumen = resumen_text
+            elif action == 'descripcion':
+                descripcion = descripcion_text
+
         return render(request, self.template_name, {
             'form': form,
             'incident': incident,
