@@ -1,15 +1,14 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load incidents_extra %}
-{% block title %}Potencias Alarmadas{% endblock %}
+{% block title %}Comunicación con el Especialista{% endblock %}
 {% block content %}
 {% include 'notes/includes/notes_menu.html'%}
-{% include 'notes/includes/diagnosticos_menu.html'%}
 
 <div class="container mb-4 mt-3">
   <div class="row mt-2">
     <div class="col-md-11">
-      <h2>Diagnóstico de Potencias Alarmadas</h2>
+      <h2>Comunicación con el Especialista</h2>
     </div>
     <div class="col-md-1">
       <div class="mb-3">
@@ -25,24 +24,15 @@
       {% csrf_token %}
       <div class="row">
         {% for field in form %}
-          {% if forloop.counter <= 2 %}
-              <div class="col-md-4 mx-auto"> 
-                <div class="form-group">
-                  {{ field.label}}
-                  {{ field|add_class:"form-control mt-1" }}
-                </div>
-              </div>
-          {% else %}
-            <div class="col-md-6 mx-auto">
-              <div class="form-group">
-                {{ field.label}}
-                {{ field|add_class:"form-control mt-1" }}
-              </div>
+          <div class="col-md-12 mx-auto"> 
+            <div class="form-group">
+              {{ field.label}}
+              {{ field|add_class:"form-control mt-1" }}
             </div>
-          {% endif %}
+          </div>            
         {% endfor %}
       </div>
-      <div class="text-center">
+      <div class="text-center"> <!-- Centra el botón -->
         <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>
       </div>
     </form>
@@ -52,6 +42,7 @@
       <h3>Texto Generado</h3>
       <div class="form-group">
         <textarea class="form-control" id="resultado" rows="10" readonly>{{ texto }}</textarea>
+        <button class="btn btn-outline-success mt-3" onclick="copiarTexto('resultado')">Copiar</button>
       </div>
     </div>
     {% else %}  

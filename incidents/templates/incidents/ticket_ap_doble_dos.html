@@ -32,15 +32,22 @@
                 {{ field|add_class:"form-control" }}
               </div>
             </div>
-          {% elif forloop.counter >= 4 %}
-            <div class="col-md-7 mx-auto">
+          {% elif forloop.last %}
+            <div class="col-md-12 mx-auto">
               <div class="form-group">
                 {{ field.label_tag }}
                 {{ field|add_class:"form-control" }}
               </div>
             </div>
-          {% elif forloop.counter == 3 or forloop.counter == 12 %}
+          {% elif forloop.counter == 3 %}
             <div class="col-md-12">
+              <div class="form-group">
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control" }}
+              </div>
+            </div>
+          {% else %}
+            <div class="col-md-6 mx-auto">
               <div class="form-group">
                 {{ field.label_tag }}
                 {{ field|add_class:"form-control" }}
@@ -83,7 +90,7 @@
     <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
   {% endif %}
 </div>
-
+{% block scripts %}
 <script>
   function copiarTexto(id) {
     // Obtiene el elemento del textarea por su ID
@@ -134,5 +141,6 @@
     }, 1800);
   }
 </script>
+{% endblock %}
 {% endblock %}
 

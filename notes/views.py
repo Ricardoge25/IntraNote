@@ -275,3 +275,287 @@ Observaciones detalladas: {observaciones}
 
     return texto
 
+class nota_reprueba(BaseIncidentView):
+  template_name = 'notes/nota_reprueba.html'
+  form_class = forms.reprueba_form
+
+  def generar_texto(self, form):
+    prueba_realizada = form.cleaned_data['prueba_realizada']
+    herramienta = form.cleaned_data['herramienta']
+    resultado = form.cleaned_data['resultado']
+
+    texto = f"""
+Prueba realizada: {prueba_realizada}
+Herramienta utilizada: {herramienta}
+Resultado obtenido: {resultado}
+
+
+S3GU1M13NT0_3V3NT0S:p3s3rv1c10
+"""
+    return texto
+  
+class nota_resolucion(BaseIncidentView):
+  template_name = 'notes/nota_resolucion.html'
+  form_class = forms.resolucion_form
+
+  def generar_texto(self, form):
+    causa = form.cleaned_data['causa']
+    solucion = form.cleaned_data['solucion']
+
+    texto = f"""
+La causa fue: {causa}
+La solución fue: {solucion}
+"""
+    return texto
+  
+class nota_especialista(BaseIncidentView):
+  template_name = 'notes/nota_especialista.html'
+  form_class = forms.especialista_form
+
+  def generar_texto(self, form):
+    especialista = form.cleaned_data['especialista']
+    canal = form.cleaned_data['canal']
+    rol = form.cleaned_data['rol']
+    avance = form.cleaned_data['avance']
+    apoyo = form.cleaned_data['apoyo']
+
+    texto = f"""
+Especialista a quien escribe: {especialista}
+Canal de comunicación: {canal}
+Rol del especialista: {rol}
+Avance solicitado del especialista: {avance}
+Apoyo dado: {apoyo}
+
+
+S3GU1M13NT0_3V3NT0S:c0mun1c4c10nalespecialista
+"""
+    return texto
+  
+class tiquete_ap_doble_uno(BaseIncidentView):
+  template_name = 'notes/tiquete_ap_doble_uno.html'
+  form_class = forms.tiquete_ap_doble_uno_form
+
+  def generar_texto(self, form):
+    nombre_anillo = form.cleaned_data['nombre_anillo']
+    ciudad = form.cleaned_data['ciudad']
+    nombre_cliente = form.cleaned_data['nombre_cliente']
+    ip_cliente = form.cleaned_data['ip_cliente']
+    contacto_cliente = form.cleaned_data['contacto_cliente']
+    numero_cliente = form.cleaned_data['numero_cliente']
+    correo_cliente = form.cleaned_data['correo_cliente']
+    direccion_cliente = form.cleaned_data['direccion_cliente']
+    disponibilidad = form.cleaned_data['disponibilidad']
+    descartes = form.cleaned_data['descartes']
+
+    resumen = f"""
+Se presenta apertura doble en el anillo {nombre_anillo}({ciudad}) afectando comunicaciones del cliente {nombre_cliente}"""
+    
+    descripcion = f"""{resumen} 
+ANILLO: {nombre_anillo}
+IP SWITCH: {ip_cliente}
+CIUDAD: {ciudad}
+NOMBRE DEL CLIENTE: {nombre_cliente}
+CONTACTO CLIENTE: {contacto_cliente}
+DIRECCIÓN CLIENTE: {direccion_cliente}
+TELÉFONO CLIENTE: {numero_cliente}
+CORREO CLIENTE: {correo_cliente}
+DISPONIBILIAD: {disponibilidad}
+DESCARTES REALIZADOS: {descartes}
+
+NOTA: Se debe garantizar que al cerrar el anillo los niveles de potencia queden entre los rangos establecidos
+"""
+    return resumen, descripcion
+  
+  def post(self, request, *args, **kwargs):
+    form = self.form_class(request.POST)
+
+    resumen = None
+    descripcion = None
+
+    if form.is_valid():
+        resumen_text, descripcion_text = self.generar_texto(form)
+        action = request.POST.get('action')  
+        if action == 'resumen':
+            resumen = resumen_text
+        elif action == 'descripcion':
+            descripcion = descripcion_text
+
+    return render(request, self.template_name, {
+        'form': form,
+        'resumen': resumen or request.POST.get('resumen'),
+        'descripcion': descripcion or request.POST.get('descripcion'),
+    })
+
+class tiquete_ap_doble_dos(BaseIncidentView):
+  template_name = 'notes/tiquete_ap_doble_dos.html'
+  form_class = forms.tiquete_ap_doble_dos_form
+
+  def generar_texto(self, form):
+    nombre_anillo = form.cleaned_data['nombre_anillo']
+    ciudad = form.cleaned_data['ciudad']
+    nombre_cliente_A = form.cleaned_data['nombre_cliente_A']
+    ip_cliente_A = form.cleaned_data['ip_cliente_A']
+    contacto_cliente_A = form.cleaned_data['contacto_cliente_A']
+    numero_cliente_A = form.cleaned_data['numero_cliente_A']
+    correo_cliente_A = form.cleaned_data['correo_cliente_A']
+    direccion_cliente_A = form.cleaned_data['direccion_cliente_A']
+    disponibilidad_A = form.cleaned_data['disponibilidad_A']
+    descartes_A = form.cleaned_data['descartes_A']
+    nombre_cliente_B = form.cleaned_data['nombre_cliente_B']
+    ip_cliente_B = form.cleaned_data['ip_cliente_B']
+    contacto_cliente_B = form.cleaned_data['contacto_cliente_B']
+    numero_cliente_B = form.cleaned_data['numero_cliente_B']
+    correo_cliente_B = form.cleaned_data['correo_cliente_B']
+    direccion_cliente_B = form.cleaned_data['direccion_cliente_B']
+    disponibilidad_B = form.cleaned_data['disponibilidad_B']
+    descartes_B = form.cleaned_data['descartes_B']
+
+    resumen = f"""
+Se presenta apertura doble en el anillo {nombre_anillo}({ciudad}) entre los clientes {nombre_cliente_A} y {nombre_cliente_B}
+"""
+    descripcion = f"""{resumen}
+ANILLO: {nombre_anillo}
+CIUDAD: {ciudad}
+NOMBRE CLIENTE CAÍDO EXTREMO A: {nombre_cliente_A}
+IP SWITCH CLIENTE EXTREMO A: {ip_cliente_A}
+CONTACTO CLIENTE CAÍDO EXTREMO A: {contacto_cliente_A}
+CORREO CLIENTE CAÍDO EXTREMO A: {correo_cliente_A}
+DIRECCIÓN CLIENTE CAÍDO EXTREMO A: {direccion_cliente_A}
+TELÉFONO CLIENTE CAÍDO EXTREMO A: {numero_cliente_A}
+DISPONIBILIAD HORARIA CLIENTE EXTREMO A: {disponibilidad_A}
+DESCARTES REALIZADOS: {descartes_A}
+
+NOMBRE CLIENTE EXTREMO B: {nombre_cliente_B}
+IP SWITCH CLIENTE EXTREMO B: {ip_cliente_B}
+CONTACTO CLIENTE CAÍDO EXTREMO B: {contacto_cliente_B}
+CORREO CLIENTE CAÍDO EXTREMO B: {correo_cliente_B}
+DIRECCIÓN CLIENTE CAÍDO EXTREMO B: {direccion_cliente_B}
+TELÉFONO CLIENTE CAÍDO EXTREMO B: {numero_cliente_B}
+DISPONIBILIAD HORARIA CLIENTE EXTREMO B: {disponibilidad_B}
+DESCARTES REALIZADOS: {descartes_B}
+"""
+    return resumen, descripcion
+  
+  def post(self, request, *args, **kwargs):
+    form = self.form_class(request.POST)
+
+    resumen = None
+    descripcion = None
+
+    if form.is_valid():
+        resumen_text, descripcion_text = self.generar_texto(form)
+        action = request.POST.get('action')  
+        if action == 'resumen':
+            resumen = resumen_text
+        elif action == 'descripcion':
+            descripcion = descripcion_text
+
+    return render(request, self.template_name, {
+        'form': form,
+        'resumen': resumen or request.POST.get('resumen'),
+        'descripcion': descripcion or request.POST.get('descripcion'),
+    })
+
+class tiquete_retiro_empalme(BaseIncidentView):
+  template_name = 'notes/tiquete_retiro_empalme.html'
+  form_class = forms.tiquete_retiro_empalme_form
+
+  def generar_texto(self, form):
+    nombre_anillo = form.cleaned_data['nombre_anillo']
+    ciudad = form.cleaned_data['ciudad']
+    nombre_cliente = form.cleaned_data['nombre_cliente']
+    ip = form.cleaned_data['ip']
+    identificador = form.cleaned_data['identificador']
+    contacto_cliente = form.cleaned_data['contacto_cliente']
+    numero_cliente = form.cleaned_data['numero_cliente']
+    correo_cliente = form.cleaned_data['correo_cliente']
+    direccion_cliente = form.cleaned_data['direccion_cliente']
+
+    resumen = f"""
+Se requiere realizar retiro desde el empalme del cliente "{nombre_cliente}" ubicado en el anillo "{nombre_anillo}", el cual se encuentra apagado por más de 48 horas *MONITOREO PROACTIVO*
+"""
+    descripcion = f"""{resumen}
+ANILLO: {nombre_anillo}
+IP SWITCH: {ip}
+CIUDAD: {ciudad}
+IDENTIFICADOR: {identificador}
+NOMBRE CLIENTE: {nombre_cliente}
+CONTACTO CLIENTE: {contacto_cliente}
+TELÉFONO CLIENTE: {numero_cliente}
+CORREO CLIENTE: {correo_cliente}
+DIRECCIÓN CLIENTE: {direccion_cliente}
+DISPONIBILIDAD CLIENTE: 24/7
+"""    
+    return resumen, descripcion
+  
+  def post(self, request, *args, **kwargs):
+    form = self.form_class(request.POST)
+    resumen = None
+    descripcion = None
+    if form.is_valid():
+        resumen_text, descripcion_text = self.generar_texto(form)
+        action = request.POST.get('action')  
+        if action == 'resumen':
+            resumen = resumen_text
+        elif action == 'descripcion':
+            descripcion = descripcion_text
+    return render(request, self.template_name, {
+      'form': form,
+      'resumen': resumen or request.POST.get('resumen'),
+      'descripcion': descripcion or request.POST.get('descripcion'),
+    })
+
+class tiquete_reingreso_empalme(BaseIncidentView):
+  template_name = 'notes/tiquete_reingreso_empalme.html'
+  form_class = forms.tiquete_reingreso_empalme_form
+
+  def generar_texto(self, form):
+    nombre_anillo = form.cleaned_data['nombre_anillo']
+    ciudad = form.cleaned_data['ciudad']
+    nombre_cliente = form.cleaned_data['nombre_cliente']
+    ip = form.cleaned_data['ip']
+    identificador = form.cleaned_data['identificador']
+    contacto_cliente = form.cleaned_data['contacto_cliente']
+    numero_cliente = form.cleaned_data['numero_cliente']
+    correo_cliente = form.cleaned_data['correo_cliente']
+    direccion_cliente = form.cleaned_data['direccion_cliente']
+    disponibilidad = form.cleaned_data['disponibilidad']
+    descartes = form.cleaned_data['descartes']
+
+    resumen = f"""
+Se requiere realizar el reingreso al anillo {nombre_anillo}({ciudad}) desde el empalme de derivación al cliente
+"""
+    descripcion = f"""{resumen}
+ANILLO: {nombre_anillo}
+IP SWITCH: {ip}
+CIUDAD: {ciudad}
+IDENTIFICADOR: {identificador}
+NOMBRE DEL CLIENTE: {nombre_cliente}
+CONTACTO CLIENTE: {contacto_cliente}
+TELÉFONO CLIENTE: {numero_cliente}
+DIRECCIÓN: {direccion_cliente}
+DISPONIBILIAD HORARIA: {disponibilidad}
+DESCARTES REALIZADOS: {descartes}
+
+NOTA: Se debe garantizar que al cerrar el anillo los niveles de potencia queden entre los rangos establecidos
+"""
+    return resumen, descripcion
+  
+  def post(self, request, *args, **kwargs):
+    form = self.form_class(request.POST)
+    resumen = None
+    descripcion = None
+    if form.is_valid():
+        resumen_text, descripcion_text = self.generar_texto(form)
+        action = request.POST.get('action')  
+        if action == 'resumen':
+            resumen = resumen_text
+        elif action == 'descripcion':
+            descripcion = descripcion_text
+    return render(request, self.template_name, {
+      'form': form,
+      'resumen': resumen or request.POST.get('resumen'),
+      'descripcion': descripcion or request.POST.get('descripcion'),
+    })
+  
+  

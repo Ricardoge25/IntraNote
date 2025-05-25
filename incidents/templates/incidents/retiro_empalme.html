@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load incidents_extra %}
-{% block title %}Ticket AP Doble{% endblock %}
+{% block title %}Retiro de Empalme{% endblock %}
 {% block content %}
 {% include 'incidents/includes/incidents_menu.html'%}
 
@@ -9,7 +9,7 @@
   <!--TITULO Y BOTÓN REGRESAR-->
   <div class="row mt-2">
     <div class="col-md-11">
-      <h2>TICKET DE APERTURA DOBLE [2 O MÁS CLIENTES]</h2>
+      <h2>TICKET RETIRO DE EMPALME</h2>
     </div>
     <div class="col-md-1">
       <div class="mb-3">
@@ -67,7 +67,7 @@
     <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
   {% endif %}
 </div>
-
+{% block scripts %}
 <script>
   function copiarTexto(id) {
     // Obtiene el elemento del textarea por su ID
@@ -118,5 +118,6 @@
     }, 1800);
   }
 </script>
+{% endblock %}
 {% endblock %}
 

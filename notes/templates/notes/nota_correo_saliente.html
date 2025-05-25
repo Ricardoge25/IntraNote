@@ -3,8 +3,8 @@
 {% load incidents_extra %}
 {% block title %}Nota Correo{% endblock %}
 {% block content %}
+{% include 'notes/includes/notes_menu.html'%}
 {% include 'notes/includes/correo_menu.html'%}
-
 
 <div class="container mb-4 mt-3">
   <div class="row mt-2">
@@ -19,7 +19,6 @@
       </div>
     </div>
   </div>
-
   <div class="container mt-5">
     <h3>Texto Generado</h3>
     <div class="form-group">
@@ -43,7 +42,6 @@
       mostrarMensaje("Texto copiado al portapapeles");
     }
   }
-
   function mostrarMensaje(mensaje) {
     // Crea un elemento div para el mensaje
     const mensajeDiv = document.createElement("div");
@@ -63,15 +61,12 @@
     mensajeDiv.style.textAlign = "center"; // Centrar el texto
     mensajeDiv.style.opacity = "1"; // Totalmente visible
     mensajeDiv.style.transition = "opacity 1s ease"; // Transición suave de opacidad
-
     // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(mensajeDiv);
-
     // Reduce la opacidad después de 4 segundos
     setTimeout(() => {
       mensajeDiv.style.opacity = "0"; // Desaparece gradualmente
     }, 800);
-
     // Elimina el mensaje después de 5 segundos
     setTimeout(() => {
       mensajeDiv.remove();

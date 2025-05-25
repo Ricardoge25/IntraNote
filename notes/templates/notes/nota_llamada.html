@@ -77,12 +77,10 @@
       textarea.setSelectionRange(0, 99999); 
       // Copia el texto al portapapeles
       document.execCommand("copy");
-
       // Muestra un mensaje temporal
       mostrarMensaje("Texto copiado al portapapeles");
     }
   }
-
   function mostrarMensaje(mensaje) {
     // Crea un elemento div para el mensaje
     const mensajeDiv = document.createElement("div");
@@ -102,15 +100,12 @@
     mensajeDiv.style.textAlign = "center"; // Centrar el texto
     mensajeDiv.style.opacity = "1"; // Totalmente visible
     mensajeDiv.style.transition = "opacity 1s ease"; // Transición suave de opacidad
-
     // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(mensajeDiv);
-
     // Reduce la opacidad después de 4 segundos
     setTimeout(() => {
       mensajeDiv.style.opacity = "0"; // Desaparece gradualmente
     }, 800);
-
     // Elimina el mensaje después de 5 segundos
     setTimeout(() => {
       mensajeDiv.remove();

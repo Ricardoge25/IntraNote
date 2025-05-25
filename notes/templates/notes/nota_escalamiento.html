@@ -1,9 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load incidents_extra %}
-
-{% block title %}Diagnóstico equipo caído{% endblock %}
-
+{% block title %}Escalamiento a Campo{% endblock %}
 {% block content %}
 {% include 'notes/includes/notes_menu.html'%}
 
@@ -21,7 +19,6 @@
       </div>
     </div>
   </div>
-
   <!--FORMULARIO-->
   <div class="container mt-4">
     <form method="post" autocomplete="on">
@@ -45,7 +42,6 @@
           </div>
         {% endfor %}
       </div>
-
       <!-- Botón de enviar -->
       <div class="text-center"> <!-- Centra el botón -->
         <button type="submit" class="btn btn-success mt-2 mb-3">Generar</button>
