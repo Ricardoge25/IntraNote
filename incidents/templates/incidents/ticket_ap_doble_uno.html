@@ -46,8 +46,8 @@
         <input type="hidden" name="resumen" value="{{ resumen }}">
         <input type="hidden" name="descripcion" value="{{ descripcion }}">
         <div class="text-center">
-          <button type="submit" name="action" value="resumen" class="btn btn-success mt-2 mb-3">Generar Resumen</button>
-          <button type="submit" name="action" value="descripcion" class="btn btn-success mt-2 mb-3">Generar Descripción</button>
+          <button type="submit" name="action" value="resumen" class="btn btn-success mx-4 my-3">Generar Resumen</button>
+          <button type="submit" name="action" value="descripcion" class="btn btn-success mx-4 my-3">Generar Descripción</button>
         </div>
     </form>
   </div>
@@ -76,7 +76,7 @@
     <h3 class="mt-2">No se ha generado ningún diagnóstico.</h3>
   {% endif %}
 </div>
-
+{% block scripts %}
 <script>
   function copiarTexto(id) {
     // Obtiene el elemento del textarea por su ID
@@ -127,5 +127,6 @@
     }, 1800);
   }
 </script>
+{% endblock %}
 {% endblock %}
 

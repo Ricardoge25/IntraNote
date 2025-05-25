@@ -42,26 +42,47 @@
         </li>
         <li class="nav-item">
           <a 
-            class="nav-link" 
-            href="#"
+            class="nav-link {% if request.resolver_match.url_name == 'nota_reprueba' %}active{% endif %}"
+            href="{% url 'nota_reprueba' %}" 
             >Reprueba</a
           >
         </li>
         <li class="nav-item">
           <a 
-            class="nav-link" 
-            href="#"
+            class="nav-link {% if request.resolver_match.url_name == 'nota_resolucion' %}active{% endif %}" 
+            href="{% url 'nota_resolucion' %}"
             >Resolución</a
           >
         </li>
         <li class="nav-item">
           <a 
-            class="nav-link" 
-            href="#"
+            class="nav-link {% if request.resolver_match.url_name == 'nota_especialista' %}active{% endif %}" 
+            href="{% url 'nota_especialista' %}"
             >Comunicación Especialista</a
+          >
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link {% if request.resolver_match.url_name == 'nota_escalamiento' %}active{% endif %}" 
+            href="{% url 'nota_escalamiento' %}"
+            >Escalamiento</a
+          >
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link {% if request.resolver_match.url_name == 'tiquete_ap_doble_uno' %}active{% endif %}" 
+            href="{% url 'tiquete_ap_doble_uno' %}"
+            >Tiquetes</a
           >
         </li>
       </ul>
     </div>
   </div>
+  
 </nav>
+
+<style>
+  .active {
+    font-weight: bold;
+  }
+</style>

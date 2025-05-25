@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
+    <span class="navbar-brand" href="#"><i>Notas</i></span>
+
     <button
       class="navbar-toggler"
       type="button"
@@ -19,30 +21,30 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a
-            class="nav-link {% if request.resolver_match.url_name == 'nota_ap_doble' %}active{% endif %}"
-            href="{% url 'nota_ap_doble' %}"
-            >Apertura Doble</a
+            class="nav-link {% if request.resolver_match.url_name == 'tiquete_ap_doble_uno' %}active{% endif %}"
+            href="{% url 'tiquete_ap_doble_uno' %}"
+            >Apertura Doble [1 Cliente]</a
           >
         </li>
         <li class="nav-item">
           <a
-            class="nav-link {% if request.resolver_match.url_name == 'nota_ap_simple_clientes' %}active{% endif %}"
-            href="{% url 'nota_ap_simple_clientes' %}"
-            >Apertura Simple Clientes</a
+            class="nav-link {% if request.resolver_match.url_name == 'tiquete_ap_doble_dos' %}active{% endif %}"
+            href="{% url 'tiquete_ap_doble_dos' %}"
+            >Apertura Doble [+2 Clientes]</a
           >
         </li>
         <li class="nav-item">
           <a
-            class="nav-link {% if request.resolver_match.url_name == 'nota_ap_simple_central' %}active{% endif %}"
-            href="{% url 'nota_ap_simple_central' %}"
-            >Apertura Simple Central</a
+            class="nav-link {% if request.resolver_match.url_name == 'tiquete_retiro_empalme' %}active{% endif %}"
+            href="{% url 'tiquete_retiro_empalme' %}"
+            >Retiro Empalme</a
           >
         </li>
         <li class="nav-item">
           <a 
-            class="nav-link {% if request.resolver_match.url_name == 'nota_potencias_alarmadas' %}active{% endif %}" 
-            href="{% url 'nota_potencias_alarmadas' %}"
-            >Potencias Alarmadas</a
+            class="nav-link {% if request.resolver_match.url_name == 'tiquete_reingreso_empalme' %}active{% endif %}" 
+            href="{% url 'tiquete_reingreso_empalme' %}"
+            >Reingreso al Anillo</a
           >
         </li>
       </ul>

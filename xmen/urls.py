@@ -23,8 +23,13 @@ urlpatterns = [
     path('', include('core.urls')),
     path('incidents/', include(incidents_patterns)),
     path('notes/', include(notes_patterns)),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     # Path de Autenticacion
     path ('accounts/', include('django.contrib.auth.urls')),
     path ('accounts/', include('registration.urls')),
 ]
+
+# Custom titles para el admin
+admin.site.site_header = "ADMINISTRACIÓN DE INTRANOTE"
+admin.site.index_title = "Panel de administración"
+admin.site.site_title = "IntraNote Admin"
