@@ -151,8 +151,6 @@ CKEDITOR_CONFIGS = {
 }
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    BASE_DIR / "notes/templates/notes/js",
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
