@@ -32,7 +32,6 @@ class IncidentModelTest(TestCase):
     def test_incident_nit(self):
         self.assertEqual(self.incident.nit, '123456789')
 
-
 class IncidentViewTest(TestCase):
     def setUp(self):
         self.client = Client()

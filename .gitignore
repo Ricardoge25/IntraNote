@@ -1,5 +1,32 @@
-"node_modules/" 
-"dist/" 
-".vscode/" 
-"*.log" 
-".DS_Store" 
+# === Django/Python ===
+*.pyc
+__pycache__/
+db.sqlite3
+
+# === Entorno virtual ===
+venv/
+env/
+ENV/
+
+# === Configuración y claves ===
+.env
+
+# === Archivos temporales ===
+*.log
+*.pot
+*.py[cod]
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# === VSCode ===
+.vscode/
+
+# === Sistema operativo ===
+.DS_Store
+Thumbs.db
+
+# === Frontend (si usas algo JS) ===
+node_modules/
+dist/
